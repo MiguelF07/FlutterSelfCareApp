@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './FirstScreen.dart';
 import './SecondScreen.dart';
 import './ThirdScreen.dart';
+import '/FourthScreen.dart';
 
 void main() => runApp(MyApp());
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
           //primaryColor:
           ),
       home: DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Color.fromARGB(255, 41, 60, 172),
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
               tabs: [
                 Tab(icon: Icon(Icons.access_alarm_rounded), text: "Focus"),
                 Tab(icon: Icon(Icons.article_rounded), text: "Journal"),
-                Tab(icon: Icon(Icons.account_circle_rounded), text: "About Me")
+                Tab(icon: Icon(Icons.account_circle_rounded), text: "About Me"),
+                Tab(icon: Icon(Icons.map_outlined), text: "Exercise Tracker")
               ],
             ),
           ),
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
               FirstScreen(),
               SecondScreen(),
               ThirdScreen(),
+              FourthScreen(),
             ],
           ),
         ),
