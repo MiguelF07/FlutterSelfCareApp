@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/miguelferreira/Desktop/2º Semestre/ICM/ICMHomework/homework/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
+            "outputFile": "/Users/miguelferreira/Desktop/FlutterSelfCareApp/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Users/miguelferreira/Desktop/2º Semestre/ICM/ICMHomework/homework/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/Users/miguelferreira/Desktop/FlutterSelfCareApp/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
