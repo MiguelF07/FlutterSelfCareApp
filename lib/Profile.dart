@@ -6,6 +6,9 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Profile"),
+      ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(
@@ -16,8 +19,8 @@ class Profile extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                      Colors.blue,
-                      Color.fromARGB(255, 20, 77, 175)
+                      Colors.teal,
+                      Color.fromARGB(255, 8, 101, 92)
                     ])),
                 child: Container(
                   width: double.infinity,
@@ -64,7 +67,7 @@ class Profile extends StatelessWidget {
                                         "Journal Entries",
                                         style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 20, 77, 175),
+                                              Color.fromARGB(255, 8, 101, 92),
                                           fontSize: 22.0,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -89,7 +92,7 @@ class Profile extends StatelessWidget {
                                         "Photos",
                                         style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 20, 77, 175),
+                                              Color.fromARGB(255, 8, 101, 92),
                                           fontSize: 22.0,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -114,7 +117,7 @@ class Profile extends StatelessWidget {
                                         "Start Date",
                                         style: TextStyle(
                                           color:
-                                              Color.fromARGB(255, 20, 77, 175),
+                                              Color.fromARGB(255, 8, 101, 92),
                                           fontSize: 22.0,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -151,7 +154,7 @@ class Profile extends StatelessWidget {
                     Text(
                       "Motto of Life:",
                       style: TextStyle(
-                        color: Color.fromARGB(255, 20, 77, 175),
+                        color: Color.fromARGB(255, 8, 101, 92),
                         fontStyle: FontStyle.normal,
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -187,7 +190,7 @@ class Profile extends StatelessWidget {
                     Text(
                       "About Myself:",
                       style: TextStyle(
-                        color: Color.fromARGB(255, 20, 77, 175),
+                        color: Color.fromARGB(255, 8, 101, 92),
                         fontStyle: FontStyle.normal,
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -206,7 +209,7 @@ class Profile extends StatelessWidget {
                             text: 'Name:',
                             style: new TextStyle(
                                 fontSize: 18.0,
-                                color: Color.fromARGB(255, 20, 77, 175),
+                                color: Color.fromARGB(255, 8, 101, 92),
                                 fontWeight: FontWeight.bold),
                           ),
                           new TextSpan(
@@ -231,7 +234,7 @@ class Profile extends StatelessWidget {
                             text: 'Age:',
                             style: new TextStyle(
                                 fontSize: 18.0,
-                                color: Color.fromARGB(255, 20, 77, 175),
+                                color: Color.fromARGB(255, 8, 101, 92),
                                 fontWeight: FontWeight.bold),
                           ),
                           new TextSpan(
