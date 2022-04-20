@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homework/CameraWidget.dart';
 import './FirstTab.dart';
 import 'SecondTab.dart';
 import 'ThirdTab.dart';
@@ -74,7 +75,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> l = <Widget>[FirstTab(), SecondTab(), ThirdTab(), FourthTab()];
+    List<Widget> l = <Widget>[
+      FirstTab(),
+      SecondTab(),
+      CameraWidget(),
+      ThirdTab(),
+      FourthTab()
+    ];
 
     return Scaffold(
         appBar: AppBar(
@@ -90,6 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.description),
               label: 'Journal',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.camera),
+              label: 'Camera',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.timer),
