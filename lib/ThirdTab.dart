@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'MyDB.dart';
 
 void main() => runApp(const ThirdTab());
 
@@ -128,6 +129,7 @@ class _ThirdTabState extends State<ThirdTab> {
                   // Here, do whatever you want
                   debugPrint('Countdown Ended');
                   changeTotalTime();
+                  _dialog();
                 },
               ))),
           Flexible(
@@ -149,7 +151,7 @@ class _ThirdTabState extends State<ThirdTab> {
                             inputFormatters: [],
                             keyboardType: TextInputType.number,
                             decoration: new InputDecoration(
-                              icon: Icon(Icons.assessment),
+                              icon: Icon(Icons.timer),
                               hintText: "Minutes",
                             ),
                             onChanged: (String str) {
@@ -224,5 +226,33 @@ class _ThirdTabState extends State<ThirdTab> {
       ),
       onPressed: onPressed,
     ));
+  }
+
+  Future<void> _dialog() {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Focus Complete!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Congratulations! You completed your focus.'),
+                Text('Check your Total Time Focused :D'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Dismiss'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
