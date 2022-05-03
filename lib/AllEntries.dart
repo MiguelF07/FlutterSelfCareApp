@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AllEntries extends StatefulWidget {
+  const AllEntries({Key? key, required this.entries}) : super(key: key);
+  final List entries;
   @override
   State<AllEntries> createState() => _AllEntriesState();
 }
@@ -8,23 +10,6 @@ class AllEntries extends StatefulWidget {
 class _AllEntriesState extends State<AllEntries> {
   List data = [];
   bool hasWidget = false;
-
-  void addData(Map<String, dynamic> card) {
-    setState(() {
-      data.add(card);
-    });
-  }
-
-  void createObject(
-      String title, String date, String description, String image) {
-    Map<String, dynamic> map = {};
-    map['title'] = title;
-    map['date'] = date;
-    map['description'] = description;
-    map['image'] = image;
-
-    addData(map);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,27 +19,26 @@ class _AllEntriesState extends State<AllEntries> {
         ),
         body: SingleChildScrollView(
             child: Column(children: [
-          ElevatedButton(
-            onPressed: () => setState(() {
-              createObject("Titulo", "Data", "Descricao", "Imagem");
-              debugPrint(data.toString());
-              hasWidget = true;
-            }),
-            child: Text("Button"),
-          ),
-          (hasWidget)
+          (widget.entries.isNotEmpty)
               ? Column(
                   children: getEntries(data),
                 )
-              : Text("")
+              : Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Center(
+                      child: Text(
+                    "No Entries to Show",
+                    style: TextStyle(fontSize: 16),
+                  )))
         ])));
   }
 
   List<Widget> getEntries(List maps) {
     List<Widget> list = [];
-    debugPrint("length" + data.length.toString());
-    for (var i = 0; i < data.length; i++) {
-      var wid = entry();
+    debugPrint("length" + widget.entries.length.toString());
+    for (var i = widget.entries.length - 1; i >= 0; i--) {
+      var wid = entry(widget.entries[i]['title'], widget.entries[i]['date'],
+          widget.entries[i]['description']);
       list.add(Row(children: [wid]));
     }
     // return new Padding(
@@ -64,7 +48,7 @@ class _AllEntriesState extends State<AllEntries> {
     return list;
   }
 
-  Widget entry() {
+  Widget entry(String title, String date, String description) {
     return (Expanded(
         child: Card(
             elevation: 4,
@@ -79,7 +63,7 @@ class _AllEntriesState extends State<AllEntries> {
                             padding: EdgeInsets.only(
                                 top: 15, left: 15, right: 15, bottom: 10),
                             child: Text(
-                              "Title",
+                              title,
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             )),
@@ -91,7 +75,7 @@ class _AllEntriesState extends State<AllEntries> {
                             padding: EdgeInsets.only(
                                 left: 15, right: 15, bottom: 10),
                             child: Text(
-                              "Date",
+                              date,
                               style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.normal,
@@ -105,7 +89,7 @@ class _AllEntriesState extends State<AllEntries> {
                             padding: EdgeInsets.only(
                                 left: 15, right: 15, bottom: 10),
                             child: Text(
-                              "Description",
+                              description,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,

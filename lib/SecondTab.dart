@@ -15,11 +15,32 @@ class SecondTab extends StatefulWidget {
 class _ProfilePageState extends State<SecondTab> {
   final _formKey = GlobalKey<FormState>();
   late File imageFile;
+  final titleController = TextEditingController();
+  final dateController = TextEditingController();
+  final descriptionController = TextEditingController();
+  List entries = [];
+
+  void addData(Map<String, dynamic> card) {
+    setState(() {
+      entries.add(card);
+    });
+  }
+
+  void createObject(String title, String date, String description) {
+    Map<String, dynamic> map = {};
+    map['title'] = title;
+    map['date'] = date;
+    map['description'] = description;
+    // map['image'] = image;
+
+    addData(map);
+  }
 
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Form(
+    return SingleChildScrollView(
+        child: Form(
       key: _formKey,
       child: Column(
         children: <Widget>[
@@ -36,6 +57,7 @@ class _ProfilePageState extends State<SecondTab> {
           Padding(
               padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
               child: TextFormField(
+                controller: titleController,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.person),
                   labelText: 'Title',
@@ -44,6 +66,7 @@ class _ProfilePageState extends State<SecondTab> {
           Padding(
               padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
               child: TextFormField(
+                controller: dateController,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.calendar_month),
                   labelText: 'Date',
@@ -52,6 +75,7 @@ class _ProfilePageState extends State<SecondTab> {
           Padding(
               padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
               child: TextField(
+                controller: descriptionController,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.book),
                   labelText: 'Journal Entry',
@@ -59,25 +83,59 @@ class _ProfilePageState extends State<SecondTab> {
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
               )),
-          ElevatedButton(
-            onPressed: () {
-              _getFromGallery();
-            },
-            child: Text("PICK FROM GALLERY"),
-          ),
-          Container(
-            height: 40.0,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              _getFromCamera();
-            },
-            child: Text("PICK FROM CAMERA"),
-          )
+          Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                "Upload a Picture:",
+                style: TextStyle(fontSize: 16),
+              )),
+          Padding(
+              padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        _getFromGallery();
+                      },
+                      child: Text("PICK FROM GALLERY"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        _getFromCamera();
+                      },
+                      child: Text("PICK FROM CAMERA"),
+                    )
+                  ])),
+          Padding(
+              padding:
+                  EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 10),
+              child: ElevatedButton(
+                onPressed: (() => {
+                      createObject(titleController.text, dateController.text,
+                          descriptionController.text),
+                      debugPrint("DEBUG" + entries.toString())
+                    }),
+                child: const Text("Post to Journal"),
+              )),
+          Padding(
+              padding:
+                  EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 10),
+              child: OutlinedButton(
+                  onPressed: () {
+                    debugPrint('Received click');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AllEntries(entries: entries)),
+                    );
+                  },
+                  child: const Text('See Journal Entries!')))
+
           // Add TextFormFields and ElevatedButton here.
         ],
       ),
-    );
+    ));
 
     /// Get from gallery
   }
