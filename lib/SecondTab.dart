@@ -26,12 +26,12 @@ class _ProfilePageState extends State<SecondTab> {
     });
   }
 
-  void createObject(String title, String date, String description) {
+  void createObject(String title, String date, String description, File image) {
     Map<String, dynamic> map = {};
     map['title'] = title;
     map['date'] = date;
     map['description'] = description;
-    // map['image'] = image;
+    map['image'] = image;
 
     addData(map);
   }
@@ -113,7 +113,7 @@ class _ProfilePageState extends State<SecondTab> {
               child: ElevatedButton(
                 onPressed: (() => {
                       createObject(titleController.text, dateController.text,
-                          descriptionController.text),
+                          descriptionController.text, imageFile),
                       debugPrint("DEBUG" + entries.toString())
                     }),
                 child: const Text("Post to Journal"),

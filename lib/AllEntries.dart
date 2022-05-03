@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class AllEntries extends StatefulWidget {
@@ -38,7 +40,7 @@ class _AllEntriesState extends State<AllEntries> {
     debugPrint("length" + widget.entries.length.toString());
     for (var i = widget.entries.length - 1; i >= 0; i--) {
       var wid = entry(widget.entries[i]['title'], widget.entries[i]['date'],
-          widget.entries[i]['description']);
+          widget.entries[i]['description'], widget.entries[i]['image']);
       list.add(Row(children: [wid]));
     }
     // return new Padding(
@@ -48,7 +50,7 @@ class _AllEntriesState extends State<AllEntries> {
     return list;
   }
 
-  Widget entry(String title, String date, String description) {
+  Widget entry(String title, String date, String description, File image) {
     return (Expanded(
         child: Card(
             elevation: 4,
@@ -85,23 +87,62 @@ class _AllEntriesState extends State<AllEntries> {
                     ),
                     Row(
                       children: [
-                        Padding(
-                            padding: EdgeInsets.only(
-                                left: 15, right: 15, bottom: 10),
-                            child: Text(
-                              description,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            )),
+                        Flexible(
+                            child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: 15, right: 15, bottom: 10),
+                                child: Text(
+                                  description,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ))),
                       ],
                     )
                   ])),
               Expanded(
                 flex: 5,
-                child: Column(children: [Text("Image")]),
+                child: Column(children: [
+                  GestureDetector(
+                      onTap: () async {
+                        await showDialog(
+                            context: context,
+                            builder: (context) => ImageDialog(image: image));
+                        // builder: (_) => ImageDialog(image: image));
+                      }, // Image tapped
+                      child: Image.file(
+                        image,
+                        fit: BoxFit.cover, // Fixes border issues
+                        width: 110.0,
+                        height: 110.0,
+                      )),
+                ]),
+                //   Image.file(image,
+                //       width: 100, height: 100, alignment: Alignment.topCenter)
+                // ]),
               )
             ])))));
+  }
+}
+
+class ImageDialog extends StatelessWidget {
+  const ImageDialog({Key? key, required this.image}) : super(key: key);
+  final File image;
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+        child: Container(
+      width: 300,
+      height: 300,
+      child: Column(children: [
+        Image.file(
+          image,
+          fit: BoxFit.cover, // Fixes border issues
+          width: 300,
+          height: 300,
+        )
+      ]),
+    ));
   }
 }
