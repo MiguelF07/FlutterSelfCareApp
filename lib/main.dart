@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:homework/CameraWidget.dart';
 import 'package:sqflite/sqlite_api.dart';
-import './FirstTab.dart';
-import 'SecondTab.dart';
-import 'ThirdTab.dart';
-import 'FourthTab.dart';
+import 'screens/FirstTab.dart';
+import 'screens/SecondTab.dart';
+import 'screens/ThirdTab.dart';
+import 'screens/FourthTab.dart';
 import 'MyDB.dart';
 
 void main() {
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
       SecondTab(),
       CameraWidget(),
       ThirdTab(),
-      FourthTab()
+      FourthTab(),
     ];
 
     return Scaffold(
