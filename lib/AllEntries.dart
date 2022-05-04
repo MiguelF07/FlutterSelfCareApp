@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class AllEntries extends StatefulWidget {
-  const AllEntries({Key? key, required this.entries}) : super(key: key);
+  const AllEntries({Key? key, required this.entries, required this.hasImage})
+      : super(key: key);
   final List entries;
+  final bool hasImage;
   @override
   State<AllEntries> createState() => _AllEntriesState();
 }
@@ -39,8 +41,12 @@ class _AllEntriesState extends State<AllEntries> {
     List<Widget> list = [];
     debugPrint("length" + widget.entries.length.toString());
     for (var i = widget.entries.length - 1; i >= 0; i--) {
-      var wid = entry(widget.entries[i]['title'], widget.entries[i]['date'],
-          widget.entries[i]['description'], widget.entries[i]['image']);
+      var wid = entry(
+          widget.entries[i]['title'],
+          widget.entries[i]['date'],
+          widget.entries[i]['description'],
+          widget.entries[i]['image'],
+          widget.entries[i]['hasImg']);
       list.add(Row(children: [wid]));
     }
     // return new Padding(
@@ -50,7 +56,8 @@ class _AllEntriesState extends State<AllEntries> {
     return list;
   }
 
-  Widget entry(String title, String date, String description, File image) {
+  Widget entry(
+      String title, String date, String description, File image, bool hasImg) {
     return (Expanded(
         child: Card(
             elevation: 4,
@@ -101,27 +108,30 @@ class _AllEntriesState extends State<AllEntries> {
                       ],
                     )
                   ])),
-              Expanded(
-                flex: 5,
-                child: Column(children: [
-                  GestureDetector(
-                      onTap: () async {
-                        await showDialog(
-                            context: context,
-                            builder: (context) => ImageDialog(image: image));
-                        // builder: (_) => ImageDialog(image: image));
-                      }, // Image tapped
-                      child: Image.file(
-                        image,
-                        fit: BoxFit.cover, // Fixes border issues
-                        width: 110.0,
-                        height: 110.0,
-                      )),
-                ]),
-                //   Image.file(image,
-                //       width: 100, height: 100, alignment: Alignment.topCenter)
-                // ]),
-              )
+              (hasImg)
+                  ? Expanded(
+                      flex: 5,
+                      child: Column(children: [
+                        GestureDetector(
+                            onTap: () async {
+                              await showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      ImageDialog(image: image));
+                              // builder: (_) => ImageDialog(image: image));
+                            }, // Image tapped
+                            child: Image.file(
+                              image,
+                              fit: BoxFit.cover, // Fixes border issues
+                              width: 110.0,
+                              height: 110.0,
+                            )),
+                      ]),
+                      //   Image.file(image,
+                      //       width: 100, height: 100, alignment: Alignment.topCenter)
+                      // ]),
+                    )
+                  : SizedBox()
             ])))));
   }
 }

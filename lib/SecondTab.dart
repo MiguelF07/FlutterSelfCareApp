@@ -14,11 +14,12 @@ class SecondTab extends StatefulWidget {
 
 class _ProfilePageState extends State<SecondTab> {
   final _formKey = GlobalKey<FormState>();
-  late File imageFile;
+  File imageFile = File("assets/images/noImage.png");
   final titleController = TextEditingController();
   final dateController = TextEditingController();
   final descriptionController = TextEditingController();
   List entries = [];
+  bool hasImage = false;
 
   void addData(Map<String, dynamic> card) {
     setState(() {
@@ -26,12 +27,14 @@ class _ProfilePageState extends State<SecondTab> {
     });
   }
 
-  void createObject(String title, String date, String description, File image) {
+  void createObject(
+      String title, String date, String description, File image, bool hasImg) {
     Map<String, dynamic> map = {};
     map['title'] = title;
     map['date'] = date;
     map['description'] = description;
     map['image'] = image;
+    map['hasImg'] = hasImg;
 
     addData(map);
   }
@@ -97,12 +100,18 @@ class _ProfilePageState extends State<SecondTab> {
                     ElevatedButton(
                       onPressed: () {
                         _getFromGallery();
+                        setState(() {
+                          hasImage = true;
+                        });
                       },
                       child: Text("PICK FROM GALLERY"),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         _getFromCamera();
+                        setState(() {
+                          hasImage = true;
+                        });
                       },
                       child: Text("PICK FROM CAMERA"),
                     )
@@ -113,8 +122,15 @@ class _ProfilePageState extends State<SecondTab> {
               child: ElevatedButton(
                 onPressed: (() => {
                       createObject(titleController.text, dateController.text,
-                          descriptionController.text, imageFile),
-                      debugPrint("DEBUG" + entries.toString())
+                          descriptionController.text, imageFile, hasImage),
+                      debugPrint("DEBUG" + entries.toString()),
+                      setState(() {
+                        titleController.clear();
+                        dateController.clear();
+                        descriptionController.clear();
+                        hasImage = false;
+                      }),
+                      _dialog()
                     }),
                 child: const Text("Post to Journal"),
               )),
@@ -127,7 +143,8 @@ class _ProfilePageState extends State<SecondTab> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AllEntries(entries: entries)),
+                          builder: (context) =>
+                              AllEntries(hasImage: hasImage, entries: entries)),
                     );
                   },
                   child: const Text('See Journal Entries!')))
@@ -165,79 +182,31 @@ class _ProfilePageState extends State<SecondTab> {
       });
     }
   }
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         resizeToAvoidBottomInset: false,
-//         body: SingleChildScrollView(
-//             child:
-//                 //Por PADDING
-//                 Column(children: <Widget>[
-//           search(),
-//           _space(50.0),
-//           prettyContainer(
-//               'Day 16/03/2022', 'What a great day. Met someone really cool.'),
-//           _space(40.0),
-//           prettyContainer('Day 14/03/2022', 'Feeling kinda tired :/'),
-//           _space(40.0),
-//           prettyContainer('Day 10/03/2022', 'Starting a new journey'),
-//           _space(50.0),
-//           OutlinedButton(
-//               onPressed: () {
-//                 debugPrint('Received click');
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(builder: (context) => AllEntries()),
-//                 );
-//               },
-//               child: const Text('Click Me')),
-//         ])));
-//   }
 
-//   @override
-//   Widget search() => Column(children: [
-//         Container(
-//             child: Container(
-//                 width: double.infinity,
-//                 height: 150.0,
-//                 child: Center(
-//                   child: Text(
-//                     "My Journal",
-//                     style: TextStyle(
-//                         fontSize: 22.0,
-//                         color: Colors.black,
-//                         fontWeight: FontWeight.bold),
-//                   ),
-//                 ))),
-//         Container(
-//             width: 550.0,
-//             child: TextField(
-//                 decoration: InputDecoration(
-//               border: OutlineInputBorder(
-//                 borderRadius: BorderRadius.circular(10.0),
-//               ),
-//               hintText: 'What are you thinking about today?',
-//             ))),
-//       ]);
-// }
-
-// Widget _space(double x) {
-//   return SizedBox(height: x);
-// }
-
-// Widget _text() {
-//   return Text("lksdajf");
-// }
-
-// Widget prettyContainer(String tit, String sub) {
-//   return FancyContainer(
-//     onTap: () {},
-//     color1: Color.fromARGB(255, 255, 255, 255),
-//     color2: Color.fromARGB(255, 255, 255, 255),
-//     title: tit,
-//     textcolor: Colors.black,
-//     subtitle: sub,
-//     subtitlecolor: Colors.black,
-//     width: 600,
-//   );
+  Future<void> _dialog() {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Done!'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('Your entry was posted on your journal'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
