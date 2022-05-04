@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.homework">
+    package="com.example.betteryou">
     <uses-permission
         android:name="android.permission.ACCESS_FINE_LOCATION" />
    <uses-permission
         android:name="android.permission.ACCESS_COARSE_LOCATION" />
    <application
-        android:label="homework"
+        android:label="BetterYou"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:homework/CameraWidget.dart';
-import 'package:homework/widgets/main_screen_weather/main_screen_widget.dart';
-import 'screens/home/FirstTab.dart';
-import 'screens/SecondTab.dart';
-import 'screens/ThirdTab.dart';
+import 'package:sqflite/sqlite_api.dart';
+import './FirstTab.dart';
+import 'SecondTab.dart';
+import 'ThirdTab.dart';
 import 'FourthTab.dart';
+import 'MyDB.dart';
 
 void main() {
   runApp(const MyApp());
