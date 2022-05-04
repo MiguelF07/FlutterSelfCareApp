@@ -11,15 +11,20 @@ class Tasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      child: GridView.builder(
-          itemCount: taskList.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
-          itemBuilder: (context, index) => taskList[index].last
-              ? _buildAddTask()
-              : _buildTask(context, taskList[index])),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: Expanded(
+          child: GridView.builder(
+              itemCount: taskList.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10),
+              itemBuilder: (context, index) => taskList[index].last
+                  ? _buildAddTask()
+                  : _buildTask(context, taskList[index])),
+        ),
+      ),
     );
   }
 
@@ -65,15 +70,7 @@ class Tasks extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
-            Row(
-              children: [
-                _buildTaskStatus(
-                    task.btnColor!, task.iconColor!, '${task.left} left!'),
-                SizedBox(width: 5),
-                _buildTaskStatus(
-                    Colors.white, task.iconColor!, '${task.left} done!'),
-              ],
-            )
+            
           ],
         ),
       ),

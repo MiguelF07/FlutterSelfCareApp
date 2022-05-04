@@ -80,7 +80,6 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Widget> l = <Widget>[
       FirstTab(),
       SecondTab(),
-      CameraWidget(),
       ThirdTab(),
       FourthTab(),
     ];
@@ -100,10 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.description),
               label: 'Journal',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.camera),
-              label: 'Camera',
-            ),
+            
             BottomNavigationBarItem(
               icon: Icon(Icons.timer),
               label: 'Focus',

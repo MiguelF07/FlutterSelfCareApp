@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:homework/api/weather_api.dart';
+import 'package:homework/constants/colors.dart';
 import 'package:homework/models/weather_forecast_hourly.dart';
+import 'package:homework/screens/Profile.dart';
 // import 'package:homework/screens/home/widgets/weather_widget.dart';
 import 'package:homework/screens/home/widgets/your_goals.dart';
 import 'package:homework/screens/home/widgets/tasks.dart';
@@ -37,16 +39,16 @@ class _FirstTabState extends State<FirstTab> {
                 ),
               )),
           Expanded(
-              child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: ((context) => Taskpage()),
-                  ));
-            },
-            child: Tasks(),
-          )),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => Taskpage()),
+                      ));
+                },
+                child: Expanded(child: Tasks())),
+          ),
         ],
       ),
     );
@@ -72,12 +74,18 @@ class _FirstTabState extends State<FirstTab> {
               color: Colors.black, fontSize: 26, fontWeight: FontWeight.bold),
         )
       ]),
-      actions: const [
-        Icon(
-          Icons.more_vert,
+      actions: <Widget>[
+        new IconButton(
+          icon: new Icon(Icons.more_vert),
+          highlightColor: kYellowDark,
           color: Colors.black,
-          size: 40,
-        )
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profile()),
+            );
+          },
+        ),
       ],
     );
   }

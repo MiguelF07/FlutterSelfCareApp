@@ -31,16 +31,15 @@ class Profile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            "https://cdn-icons-png.flaticon.com/512/147/147144.png",
-                          ),
+                          backgroundImage:
+                              AssetImage('assets/images/carlota.jpeg'),
                           radius: 50.0,
                         ),
                         SizedBox(
                           height: 10.0,
                         ),
                         Text(
-                          "Miguel",
+                          "Carlota",
                           style: TextStyle(
                             fontSize: 22.0,
                             color: Colors.white,
@@ -164,7 +163,7 @@ class Profile extends StatelessWidget {
                       height: 10.0,
                     ),
                     Text(
-                      "Live and let live.",
+                      "Day by day, you will get there",
                       style: TextStyle(
                         fontSize: 22.0,
                         fontStyle: FontStyle.normal,
@@ -213,7 +212,7 @@ class Profile extends StatelessWidget {
                                 fontWeight: FontWeight.bold),
                           ),
                           new TextSpan(
-                              text: ' Miguel',
+                              text: ' Carlota',
                               style: new TextStyle(
                                   fontSize: 18.0,
                                   color: Color.fromARGB(255, 0, 0, 0),

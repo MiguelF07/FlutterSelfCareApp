@@ -78,7 +78,7 @@ class DetailPage extends StatelessWidget {
                   )),
               SizedBox(height: 5),
               Text(
-                'You have ${task.left} goals left for today!',
+                'You have these goals for today!',
                 style: TextStyle(fontSize: 13, color: Colors.black),
               )
             ]),
