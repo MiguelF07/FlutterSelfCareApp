@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:homework/CameraWidget.dart';
-import './FirstTab.dart';
-import 'SecondTab.dart';
-import 'ThirdTab.dart';
+import 'package:homework/widgets/main_screen_weather/main_screen_widget.dart';
+import 'screens/home/FirstTab.dart';
+import 'screens/SecondTab.dart';
+import 'screens/ThirdTab.dart';
 import 'FourthTab.dart';
 
 void main() {
@@ -80,7 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
       SecondTab(),
       CameraWidget(),
       ThirdTab(),
-      FourthTab()
+      FourthTab(),
+      MainScreenWidget()
     ];
 
     return Scaffold(
