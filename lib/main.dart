@@ -82,7 +82,8 @@ class _MyHomePageState extends State<MyHomePage> {
       SecondTab(),
       CameraWidget(),
       ThirdTab(),
-      FourthTab()
+      FourthTab(),
+      MainScreenWidget()
     ];
 
     return Scaffold(
