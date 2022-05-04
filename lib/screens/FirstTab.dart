@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:homework/api/weather_api.dart';
 import 'package:homework/constants/colors.dart';
-import 'package:homework/models/weather_forecast_hourly.dart';
 import 'package:homework/screens/Profile.dart';
 // import 'package:homework/screens/home/widgets/weather_widget.dart';
 import 'package:homework/screens/home/widgets/your_goals.dart';
 import 'package:homework/screens/home/widgets/tasks.dart';
-import 'package:homework/widgets/main_screen_weather/main_screen_widget.dart';
 import 'taskpage.dart';
-import 'package:homework/widgets/main_screen_weather/main_screen_model.dart';
 
 class FirstTab extends StatefulWidget {
   @override

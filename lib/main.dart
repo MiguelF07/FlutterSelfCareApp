@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:homework/CameraWidget.dart';
-import 'package:sqflite/sqlite_api.dart';
 import 'screens/FirstTab.dart';
 import 'screens/SecondTab.dart';
 import 'screens/ThirdTab.dart';
 import 'screens/FourthTab.dart';
-import 'MyDB.dart';
+import 'screens/WeatherTab.dart';
 
 void main() {
   runApp(const MyApp());
@@ -80,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Widget> l = <Widget>[
       FirstTab(),
       SecondTab(),
+      WeatherTab(),
       ThirdTab(),
       FourthTab(),
     ];
@@ -99,7 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.description),
               label: 'Journal',
             ),
-            
+            BottomNavigationBarItem(
+              icon: Icon(Icons.sunny),
+              label: 'Weather',
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.timer),
               label: 'Focus',
