@@ -104,7 +104,7 @@ class _ProfilePageState extends State<SecondTab> {
                           hasImage = true;
                         });
                       },
-                      child: Text("PICK FROM GALLERY"),
+                      child: Text("FROM GALLERY"),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -113,7 +113,7 @@ class _ProfilePageState extends State<SecondTab> {
                           hasImage = true;
                         });
                       },
-                      child: Text("PICK FROM CAMERA"),
+                      child: Text("FROM CAMERA"),
                     )
                   ])),
           Padding(
