@@ -23,16 +23,18 @@ class _FirstTabState extends State<FirstTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           YourGoals(),
-          Container(
-              padding: EdgeInsets.all(15),
-              child: Text(
-                'Your daily goals:',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                ),
-              )),
-          Expanded(
+          Flexible(
+              child: Container(
+                  padding: EdgeInsets.all(15),
+                  child: Text(
+                    'Your daily goals:',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ))),
+          Flexible(
+            flex: 5,
             child: GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -41,7 +43,7 @@ class _FirstTabState extends State<FirstTab> {
                         builder: ((context) => Taskpage()),
                       ));
                 },
-                child: Expanded(child: Tasks())),
+                child: Tasks()),
           ),
         ],
       ),
