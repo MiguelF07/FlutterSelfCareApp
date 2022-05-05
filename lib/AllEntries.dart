@@ -112,83 +112,92 @@ class _AllEntriesState extends State<AllEntries> {
         child: Card(
             elevation: 4,
             child: Container(
-                child: Row(children: [
-              Expanded(
-                  flex: 5,
-                  child: Column(children: [
-                    Row(
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(
-                                top: 15, left: 15, right: 15, bottom: 10),
-                            child: Text(
-                              title,
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                            )),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(
-                                left: 15, right: 15, bottom: 10),
-                            child: Text(
-                              date,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.normal,
-                                  fontStyle: FontStyle.italic),
-                            )),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Flexible(
-                            child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 15, right: 15, bottom: 10),
-                                child: Text(
-                                  description,
-                                  style: TextStyle(
+                child: Column(children: [
+              Row(children: [
+                Expanded(
+                    flex: 5,
+                    child: Column(children: [
+                      Row(
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  top: 15, left: 15, right: 15, bottom: 10),
+                              child: Text(
+                                title,
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              )),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  left: 15, right: 15, bottom: 10),
+                              child: Text(
+                                date,
+                                style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.normal,
-                                  ),
-                                ))),
-                      ],
-                    ),
-                    ElevatedButton(
-                      child: Text(
-                        'query',
-                        style: TextStyle(fontSize: 20),
+                                    fontStyle: FontStyle.italic),
+                              )),
+                        ],
                       ),
-                      onPressed: () => {_delete(id), updatePage()},
-                    ),
-                  ])),
-              (hasImg == 1)
-                  ? Expanded(
-                      flex: 5,
-                      child: Column(children: [
-                        GestureDetector(
-                            onTap: () async {
-                              await showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      ImageDialog(image: img));
-                              // builder: (_) => ImageDialog(image: image));
-                            }, // Image tapped
-                            child: Image.file(
-                              img,
-                              fit: BoxFit.cover, // Fixes border issues
-                              width: 110.0,
-                              height: 110.0,
-                            )),
-                      ]),
-                      //   Image.file(image,
-                      //       width: 100, height: 100, alignment: Alignment.topCenter)
-                      // ]),
-                    )
-                  : SizedBox()
+                      Row(
+                        children: [
+                          Flexible(
+                              child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 15, right: 15, bottom: 10),
+                                  child: Text(
+                                    description,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ))),
+                        ],
+                      ),
+                    ])),
+                (hasImg == 1)
+                    ? Expanded(
+                        flex: 5,
+                        child: Column(children: [
+                          GestureDetector(
+                              onTap: () async {
+                                await showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        ImageDialog(image: img));
+                                // builder: (_) => ImageDialog(image: image));
+                              }, // Image tapped
+                              child: Image.file(
+                                img,
+                                fit: BoxFit.cover, // Fixes border issues
+                                width: 110.0,
+                                height: 110.0,
+                              )),
+                        ]),
+                        //   Image.file(image,
+                        //       width: 100, height: 100, alignment: Alignment.topCenter)
+                        // ]),
+                      )
+                    : SizedBox(),
+              ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.all(10),
+                      child: ElevatedButton(
+                        child: Text(
+                          'Delete',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        onPressed: () => {_delete(id), updatePage()},
+                      )),
+                ],
+              )
             ])))));
   }
 }
