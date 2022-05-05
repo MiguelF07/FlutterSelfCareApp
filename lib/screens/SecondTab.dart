@@ -63,6 +63,21 @@ class _ProfilePageState extends State<SecondTab> {
     allRows.forEach(print);
   }
 
+  refresh() {
+    setState(() {
+      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AllEntries(
+                hasImage: hasImage,
+                entries: entries,
+                dbHelper: widget.dbHelper,
+                notifyParent: refresh)),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
@@ -161,13 +176,7 @@ class _ProfilePageState extends State<SecondTab> {
                     }),
                 child: const Text("Post to Journal"),
               )),
-          ElevatedButton(
-            child: Text(
-              'query',
-              style: TextStyle(fontSize: 20),
-            ),
-            onPressed: _query,
-          ),
+
           Padding(
               padding:
                   EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 10),
@@ -180,7 +189,8 @@ class _ProfilePageState extends State<SecondTab> {
                           builder: (context) => AllEntries(
                               hasImage: hasImage,
                               entries: entries,
-                              dbHelper: widget.dbHelper)),
+                              dbHelper: widget.dbHelper,
+                              notifyParent: refresh)),
                     );
                   },
                   child: const Text('See Journal Entries!')))

@@ -8,11 +8,13 @@ class AllEntries extends StatefulWidget {
       {Key? key,
       required this.entries,
       required this.hasImage,
-      required this.dbHelper})
+      required this.dbHelper,
+      required this.notifyParent})
       : super(key: key);
   final List entries;
   final int hasImage;
   final DatabaseHelper dbHelper;
+  final Function() notifyParent;
   @override
   State<AllEntries> createState() => _AllEntriesState();
 }
@@ -33,6 +35,16 @@ class _AllEntriesState extends State<AllEntries> {
     print('query all rows:');
     allRows.forEach(print);
     return allRows;
+  }
+
+  void _delete(int id) async {
+    // Assuming that the number of rows is the id for the last row.
+    final rowsDeleted = await widget.dbHelper.delete(id);
+    print('deleted $rowsDeleted row(s): row $id');
+  }
+
+  void updatePage() {
+    widget.notifyParent();
   }
 
   @override
@@ -75,6 +87,7 @@ class _AllEntriesState extends State<AllEntries> {
     debugPrint("length" + snapshot.data!.length.toString());
     for (var i = snapshot.data!.length - 1; i >= 0; i--) {
       var wid = entry(
+          snapshot.data![i]['_id'],
           snapshot.data![i]['title'],
           snapshot.data![i]['date'],
           snapshot.data![i]['description'],
@@ -89,9 +102,11 @@ class _AllEntriesState extends State<AllEntries> {
     return list;
   }
 
-  Widget entry(
-      String title, String date, String description, String image, int hasImg) {
+  Widget entry(int id, String title, String date, String description,
+      String image, int hasImg) {
     File img = File(image);
+
+    int entryID = id;
 
     return (Expanded(
         child: Card(
@@ -141,7 +156,14 @@ class _AllEntriesState extends State<AllEntries> {
                                   ),
                                 ))),
                       ],
-                    )
+                    ),
+                    ElevatedButton(
+                      child: Text(
+                        'query',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () => {_delete(id), updatePage()},
+                    ),
                   ])),
               (hasImg == 1)
                   ? Expanded(
