@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:homework/constants/colors.dart';
 import 'package:homework/database_helper.dart';
 import 'package:homework/screens/Profile.dart';
-// import 'package:homework/screens/home/widgets/weather_widget.dart';
 import 'package:homework/screens/home/widgets/your_goals.dart';
 import 'package:homework/screens/home/widgets/tasks.dart';
 import 'taskpage.dart';

@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:homework/screens/detail/detail.dart';
-import 'package:homework/screens/detail/details.dart';
 import '../../../models/task.dart';
 
 class Tasks extends StatelessWidget {

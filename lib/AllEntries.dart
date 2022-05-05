@@ -95,10 +95,6 @@ class _AllEntriesState extends State<AllEntries> {
           snapshot.data![i]['hasImage']);
       list.add(Row(children: [wid]));
     }
-    // return new Padding(
-    //   padding: EdgeInsets.all(15.0),
-    //   child: entry(),
-    // );
     return list;
   }
 
@@ -178,9 +174,6 @@ class _AllEntriesState extends State<AllEntries> {
                                 height: 110.0,
                               )),
                         ]),
-                        //   Image.file(image,
-                        //       width: 100, height: 100, alignment: Alignment.topCenter)
-                        // ]),
                       )
                     : SizedBox(),
               ]),
