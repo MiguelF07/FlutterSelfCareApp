@@ -1,12 +1,18 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:homework/database_helper.dart';
 
 class AllEntries extends StatefulWidget {
-  const AllEntries({Key? key, required this.entries, required this.hasImage})
+  const AllEntries(
+      {Key? key,
+      required this.entries,
+      required this.hasImage,
+      required this.dbHelper})
       : super(key: key);
   final List entries;
-  final bool hasImage;
+  final int hasImage;
+  final DatabaseHelper dbHelper;
   @override
   State<AllEntries> createState() => _AllEntriesState();
 }
@@ -14,39 +20,66 @@ class AllEntries extends StatefulWidget {
 class _AllEntriesState extends State<AllEntries> {
   List data = [];
   bool hasWidget = false;
+  late Future<List<Map<String, dynamic>>> futureData;
+
+  @override
+  void initState() {
+    super.initState();
+    futureData = _query();
+  }
+
+  Future<List<Map<String, dynamic>>> _query() async {
+    final allRows = await widget.dbHelper.queryAllRows();
+    print('query all rows:');
+    allRows.forEach(print);
+    return allRows;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Journal Entries"),
-        ),
-        body: SingleChildScrollView(
-            child: Column(children: [
-          (widget.entries.isNotEmpty)
-              ? Column(
-                  children: getEntries(data),
-                )
-              : Padding(
-                  padding: EdgeInsets.only(top: 20),
-                  child: Center(
-                      child: Text(
-                    "No Entries to Show",
-                    style: TextStyle(fontSize: 16),
-                  )))
-        ])));
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: futureData,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Scaffold(
+              appBar: AppBar(
+                title: Text("Journal Entries"),
+              ),
+              body: SingleChildScrollView(
+                  child: Column(children: [
+                (snapshot.data!.isNotEmpty)
+                    ? Column(
+                        children: getEntries(snapshot),
+                      )
+                    : Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Center(
+                            child: Text(
+                          "No Entries to Show",
+                          style: TextStyle(fontSize: 16),
+                        )))
+              ])));
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        }
+
+        // By default, show a loading spinner.
+        return const CircularProgressIndicator();
+      },
+    );
   }
 
-  List<Widget> getEntries(List maps) {
+  List<Widget> getEntries(AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
     List<Widget> list = [];
-    debugPrint("length" + widget.entries.length.toString());
-    for (var i = widget.entries.length - 1; i >= 0; i--) {
+
+    debugPrint("length" + snapshot.data!.length.toString());
+    for (var i = snapshot.data!.length - 1; i >= 0; i--) {
       var wid = entry(
-          widget.entries[i]['title'],
-          widget.entries[i]['date'],
-          widget.entries[i]['description'],
-          widget.entries[i]['image'],
-          widget.entries[i]['hasImg']);
+          snapshot.data![i]['title'],
+          snapshot.data![i]['date'],
+          snapshot.data![i]['description'],
+          snapshot.data![i]['image'],
+          snapshot.data![i]['hasImage']);
       list.add(Row(children: [wid]));
     }
     // return new Padding(
@@ -57,7 +90,9 @@ class _AllEntriesState extends State<AllEntries> {
   }
 
   Widget entry(
-      String title, String date, String description, File image, bool hasImg) {
+      String title, String date, String description, String image, int hasImg) {
+    File img = File(image);
+
     return (Expanded(
         child: Card(
             elevation: 4,
@@ -108,7 +143,7 @@ class _AllEntriesState extends State<AllEntries> {
                       ],
                     )
                   ])),
-              (hasImg)
+              (hasImg == 1)
                   ? Expanded(
                       flex: 5,
                       child: Column(children: [
@@ -117,11 +152,11 @@ class _AllEntriesState extends State<AllEntries> {
                               await showDialog(
                                   context: context,
                                   builder: (context) =>
-                                      ImageDialog(image: image));
+                                      ImageDialog(image: img));
                               // builder: (_) => ImageDialog(image: image));
                             }, // Image tapped
                             child: Image.file(
-                              image,
+                              img,
                               fit: BoxFit.cover, // Fixes border issues
                               width: 110.0,
                               height: 110.0,

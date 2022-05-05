@@ -5,21 +5,25 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fancy_containers/fancy_containers.dart';
 import 'package:homework/AllEntries.dart';
+import 'package:homework/database_helper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SecondTab extends StatefulWidget {
+  const SecondTab({Key? key, required this.dbHelper}) : super(key: key);
+
+  final DatabaseHelper dbHelper;
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<SecondTab> {
   final _formKey = GlobalKey<FormState>();
-  File imageFile = File("assets/images/noImage.png");
+  String imageFile = "";
   final titleController = TextEditingController();
   final dateController = TextEditingController();
   final descriptionController = TextEditingController();
   List entries = [];
-  bool hasImage = false;
+  int hasImage = 0;
 
   void addData(Map<String, dynamic> card) {
     setState(() {
@@ -37,6 +41,26 @@ class _ProfilePageState extends State<SecondTab> {
     map['hasImg'] = hasImg;
 
     addData(map);
+  }
+
+  void _insert(String title, String date, String description, String image,
+      int hasImg) async {
+    // row to insert
+    Map<String, dynamic> row = {
+      DatabaseHelper.columnTitle: title,
+      DatabaseHelper.columnDate: date,
+      DatabaseHelper.columnDescr: description,
+      DatabaseHelper.columnImage: image,
+      DatabaseHelper.columnHasImage: hasImg,
+    };
+    final id = await widget.dbHelper.insert(row);
+    print('inserted row id: $id');
+  }
+
+  void _query() async {
+    final allRows = await widget.dbHelper.queryAllRows();
+    print('query all rows:');
+    allRows.forEach(print);
   }
 
   @override
@@ -101,7 +125,7 @@ class _ProfilePageState extends State<SecondTab> {
                       onPressed: () {
                         _getFromGallery();
                         setState(() {
-                          hasImage = true;
+                          hasImage = 1;
                         });
                       },
                       child: Text("FROM GALLERY"),
@@ -110,7 +134,7 @@ class _ProfilePageState extends State<SecondTab> {
                       onPressed: () {
                         _getFromCamera();
                         setState(() {
-                          hasImage = true;
+                          hasImage = 1;
                         });
                       },
                       child: Text("FROM CAMERA"),
@@ -121,19 +145,29 @@ class _ProfilePageState extends State<SecondTab> {
                   EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 10),
               child: ElevatedButton(
                 onPressed: (() => {
-                      createObject(titleController.text, dateController.text,
-                          descriptionController.text, imageFile, hasImage),
+                      // createObject(titleController.text, dateController.text,
+                      //     descriptionController.text, imageFile, hasImage),
                       debugPrint("DEBUG" + entries.toString()),
+                      _insert(titleController.text, dateController.text,
+                          descriptionController.text, imageFile, hasImage),
                       setState(() {
                         titleController.clear();
                         dateController.clear();
                         descriptionController.clear();
-                        hasImage = false;
+                        hasImage = 0;
                       }),
+
                       _dialog()
                     }),
                 child: const Text("Post to Journal"),
               )),
+          ElevatedButton(
+            child: Text(
+              'query',
+              style: TextStyle(fontSize: 20),
+            ),
+            onPressed: _query,
+          ),
           Padding(
               padding:
                   EdgeInsets.only(top: 20, left: 20, right: 20, bottom: 10),
@@ -143,8 +177,10 @@ class _ProfilePageState extends State<SecondTab> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              AllEntries(hasImage: hasImage, entries: entries)),
+                          builder: (context) => AllEntries(
+                              hasImage: hasImage,
+                              entries: entries,
+                              dbHelper: widget.dbHelper)),
                     );
                   },
                   child: const Text('See Journal Entries!')))
@@ -165,7 +201,7 @@ class _ProfilePageState extends State<SecondTab> {
     );
     if (pickedFile != null) {
       setState(() {
-        imageFile = File(pickedFile.path);
+        imageFile = pickedFile.path;
       });
     }
   }
@@ -178,7 +214,7 @@ class _ProfilePageState extends State<SecondTab> {
     );
     if (pickedFile != null) {
       setState(() {
-        imageFile = File(pickedFile.path);
+        imageFile = pickedFile.path;
       });
     }
   }

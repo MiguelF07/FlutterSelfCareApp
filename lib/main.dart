@@ -4,13 +4,14 @@ import 'screens/SecondTab.dart';
 import 'screens/ThirdTab.dart';
 import 'screens/FourthTab.dart';
 import 'screens/WeatherTab.dart';
+import 'database_helper.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -29,13 +30,13 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.teal,
       ),
-      home: const MyHomePage(title: 'BetterYou'),
+      home: MyHomePage(title: 'BetterYou'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -55,6 +56,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   int _selectedIndex = 0;
+  DatabaseHelper dbHelper = DatabaseHelper.instance;
 
   void _incrementCounter() {
     setState(() {
@@ -77,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     List<Widget> l = <Widget>[
       FirstTab(),
-      SecondTab(),
+      SecondTab(dbHelper: dbHelper),
       WeatherTab(),
       ThirdTab(),
       FourthTab(),
