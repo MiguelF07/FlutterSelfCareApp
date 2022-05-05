@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/constants/colors.dart';
+import 'package:homework/database_helper.dart';
 import 'package:homework/screens/Profile.dart';
 // import 'package:homework/screens/home/widgets/weather_widget.dart';
 import 'package:homework/screens/home/widgets/your_goals.dart';
@@ -7,15 +8,13 @@ import 'package:homework/screens/home/widgets/tasks.dart';
 import 'taskpage.dart';
 
 class FirstTab extends StatefulWidget {
+  const FirstTab({Key? key, required this.dbHelper}) : super(key: key);
+  final DatabaseHelper dbHelper;
   @override
   _FirstTabState createState() => _FirstTabState();
 }
 
 class _FirstTabState extends State<FirstTab> {
-  void mockFunction() {
-    1 + 1;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +77,8 @@ class _FirstTabState extends State<FirstTab> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Profile()),
+              MaterialPageRoute(
+                  builder: (context) => Profile(dbHelper: widget.dbHelper)),
             );
           },
         ),

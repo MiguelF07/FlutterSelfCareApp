@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> l = <Widget>[
-      FirstTab(),
+      FirstTab(dbHelper: dbHelper),
       SecondTab(dbHelper: dbHelper),
       WeatherTab(),
       ThirdTab(),
